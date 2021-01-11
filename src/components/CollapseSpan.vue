@@ -1,6 +1,6 @@
 <template>
     <div style="width: 95%">
-        <a :href="item.description" v-for="(item, index) in dataList" v-bind:key="index">
+        <a @click="titleHref(item)" v-for="(item, index) in dataList" v-bind:key="index">
             <span class="span-style" >
                 {{ item.description }}
             </span>
@@ -11,6 +11,14 @@
 <script>
     export default {
         name: 'CollapseSpan',
+        props: {
+            'titleHrefProp': {
+                type: Function,
+                default: function (row) {
+                    return row;
+                }
+            }
+        },
         data() {
             return {
                 dataList: [
@@ -23,6 +31,11 @@
                     {description: '测试4', type: '4'},
                     {description: '测试4', type: '4'},
                 ]
+            }
+        },
+        methods: {
+            titleHref: function (row) {
+                this.titleHrefProp(row);
             }
         }
     }

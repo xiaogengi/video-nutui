@@ -33,14 +33,14 @@
         <nut-collapse v-model="videoTitle" :accordion="true">
             <nut-collapse-item title="选择类型" :name="1">
                 <!-- 地址相关 -->
-                <v-collapse-span></v-collapse-span>
+                <v-collapse-span ref="collapseSpan" :titleHrefProp="titleHrefProp"></v-collapse-span>
             </nut-collapse-item>
             <nut-collapse-item title="隐藏" :name="0" v-show="false">
                 <img src="https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=2646036715,400043701&fm=26&gp=0.jpg" style="max-width:100px; max-height:100px"/>
             </nut-collapse-item>
         </nut-collapse>
         <!-- 视频列表 -->
-        <v-video-list></v-video-list>
+        <v-video-list ref="videoList"></v-video-list>
     </div>
 </template>
 
@@ -96,9 +96,13 @@
                 console.log('搜索 ： ' + value)
             },
             change: function (val) {
-                console.log(this.videoTitleLog.filter(function (element) {
+                console.log('change : ' + this.videoTitleLog.filter(function (element) {
                     return val == element.vid;
                 }));
+            },
+            titleHrefProp: function (row) {
+                console.log(row);
+                this.$refs.videoList.$emit('getView', row.type);
             }
         }
     }
